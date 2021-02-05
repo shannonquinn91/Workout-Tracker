@@ -40,7 +40,17 @@ module.exports = function (app) {
     
     //get workouts GET route
     app.get("/api/workouts/range", (req, res) => {
-        db.workout.aggregate([{$addFields: {totalDuration: {$sum: "$exercises.duration"}}}])
+        db.workout.aggregate([
+            {
+                $addFields: {
+                    totalDuration: {
+                        $sum: "$exercises.duration"
+                    },
+                },
+            },
+        ])
+        .sort({_id: -1})
+        .limit(7)
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
