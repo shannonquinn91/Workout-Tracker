@@ -14,14 +14,22 @@ module.exports = function (app) {
     });
 
     //add exercise PUT route
-    app.put("/api/workouts/:id", ({body}, res) => {
-        console.log(body);
-        //db.workout.findOneAndUpdate()
+    app.put("/api/workouts/:id", (req, res) => {
+        console.log(req.body)
+        db.workout.findOneAndUpdate({_id: req.params.id}, {$push: {exercises: [req.body]}})
+        .then(newExercise => {
+            res.json(newExercise);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+     
     });
 
     //create workout POST route
-    app.post("/api/workouts", ({body}, res) => {
-        db.workout.create(body)
+    app.post("/api/workouts", (req, res) => {
+        console.log(req.params)
+        db.workout.create(req.params)
         .then(newWorkout => {
             res.json(newWorkout);
         })
@@ -31,6 +39,14 @@ module.exports = function (app) {
     });
     
     //get workouts GET route
-    app.get("/api/workouts/range", (req, res) => {});
+    app.get("/api/workouts/range", (req, res) => {
+        db.workout.aggregate([{$addFields: {totalDuration: {$sum: "$exercises.duration"}}}])
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+    });
 
 }
