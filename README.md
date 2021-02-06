@@ -9,7 +9,7 @@
 
   ## Links
   Github Repo: https://github.com/shannonquinn91/Workout-Tracker  
-  Deployed Application: 
+  Deployed Application: https://workout-tracker-sq.herokuapp.com/  
 
   ## Description
   The fitness tracker allows the user to enter specific information about the exercises they are performing. The dashboard shows the user data on the last seven workouts recorded, such as total duration, and a pie chart of exercises.    
@@ -23,5 +23,6 @@
   ## Contact Me
   You can check out my GitHub profile at https://www.github.com/shannonquinn91 or email me at shannon.quinn91@gmail.com.
   ## Screenshots
-  ![log workout](assets/log-workout.png)  
+  ![home](assets/home.png)  
   ![dashboard](assets/dashboard.png)
+  ![addexercise](assets/addexercise.png)
