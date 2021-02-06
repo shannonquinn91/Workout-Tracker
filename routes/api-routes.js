@@ -4,7 +4,15 @@ module.exports = function (app) {
     //API routes
     //last workout GET route
     app.get("/api/workouts", (req, res) => {
-        db.workout.find({})
+        db.workout.aggregate([
+            {
+                $addFields: {
+                    totalDuration: {
+                        $sum: "$exercises.duration"
+                    },
+                },
+            },
+        ])
         .then(dbWorkouts => {
             res.json(dbWorkouts);
         })
@@ -15,7 +23,7 @@ module.exports = function (app) {
 
     //add exercise PUT route
     app.put("/api/workouts/:id", (req, res) => {
-        console.log(req.body)
+        //console.log(req.body)
         db.workout.findOneAndUpdate({_id: req.params.id}, {$push: {exercises: [req.body]}})
         .then(newExercise => {
             res.json(newExercise);
